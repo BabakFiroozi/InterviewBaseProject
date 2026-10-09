@@ -120,6 +120,7 @@ namespace Shop.Views
             _buttonLabel.enableAutoSizing = true;
             _buttonLabel.fontSizeMin = 30f;
             _buttonLabel.fontSizeMax = 60f;
+            IconTextAligner.Attach(_coinIcon.rectTransform, _buttonLabel);
         }
 
         // ---- state ---------------------------------------------------------------------------------

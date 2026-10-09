@@ -3,6 +3,7 @@ using GameCore;
 using Shop.Core;
 using Shop.Model;
 using Shop.Views;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,6 +48,8 @@ namespace Shop.Runtime
             if (canvas != null)
                 _hud = PowerUpHud.Create(canvas, this);
 
+            AttachCoinIconToScore(scene);
+
             if (_art != null)
             {
                 if (_art.onBallStartMoving != null)
@@ -55,6 +58,26 @@ namespace Shop.Runtime
                     _art.onGameEnded.OnEventRaised += OnRunEnded;
                 if (_art.onScoreChanged != null)
                     _art.onScoreChanged.OnEventRaised += OnScoreChanged;
+            }
+        }
+
+        /// <summary>
+        /// Puts a coin icon beside the score text of the game-over screen. The in-game HUD has a text with the same
+        /// name ("PlayerScore"), so the right one is recognised by sitting next to the game-over "RetryButton".
+        /// </summary>
+        private static void AttachCoinIconToScore(Scene scene)
+        {
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                foreach (var text in root.GetComponentsInChildren<TextMeshProUGUI>(true))
+                {
+                    if (text.gameObject.name == "PlayerScore" && text.transform.parent != null
+                        && text.transform.parent.Find("RetryButton") != null)
+                    {
+                        ScoreCoinIcon.Attach(text);
+                        return;
+                    }
+                }
             }
         }
 

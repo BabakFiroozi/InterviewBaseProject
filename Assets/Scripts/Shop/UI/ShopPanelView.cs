@@ -103,6 +103,7 @@ namespace Shop.Views
             _balanceText.enableAutoSizing = true;
             _balanceText.fontSizeMin = 36f;
             _balanceText.fontSizeMax = 80f;
+            IconTextAligner.Attach(coin.rectTransform, _balanceText);
         }
 
         private RectTransform BuildScrollArea(RectTransform root)
