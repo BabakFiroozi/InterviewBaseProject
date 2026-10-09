@@ -4,27 +4,23 @@ using Enums;
 using Shop.Core;
 using Shop.Model;
 using Shop.Runtime;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Shop.Views
 {
     /// <summary>
-    /// Power-up controls along the bottom of the game screen, plus the "+N coins" reward shown after a run.
+    /// Power-up controls along the bottom of the game screen.
     /// Only usable (visible and tappable) while a run is active.
     /// </summary>
     public sealed class PowerUpHud : MonoBehaviour
     {
         private const float MaxButtonSize = 210f;
         private const float ButtonGap = 28f;
-        private const float RewardDelay = 2.2f;
 
         private GameSession _session;
         private CanvasGroup _group;
         private Toast _toast;
-        private RectTransform _reward;
-        private TextMeshProUGUI _rewardText;
         private readonly List<PowerUpButton> _buttons = new List<PowerUpButton>();
 
         public static PowerUpHud Create(Canvas canvas, GameSession session)
@@ -39,7 +35,7 @@ namespace Shop.Views
             var hud = root.gameObject.AddComponent<PowerUpHud>();
             hud._session = session;
 
-            // Only the controls fade with the run state; the reward and toast must stay visible after a run ends.
+            // Only the controls fade with the run state; the toast lives outside the group.
             var controls = UiFactory.CreateRect("Controls", root);
             UiFactory.Stretch(controls);
             hud._group = controls.gameObject.AddComponent<CanvasGroup>();
@@ -48,7 +44,6 @@ namespace Shop.Views
             hud._group.interactable = false;
 
             hud.BuildButtons(controls, art, canvas, session.Service);
-            hud.BuildReward(root, art);
             hud._toast = Toast.Create(root, new Vector2(0.5f, 0f), new Vector2(0.5f, 0f), new Vector2(0f, 330f));
             return hud;
         }
@@ -80,31 +75,6 @@ namespace Shop.Views
             }
         }
 
-        private void BuildReward(RectTransform root, ShopResources art)
-        {
-            _reward = UiFactory.CreateRect("Reward", root);
-            UiFactory.SetAnchored(_reward, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), new Vector2(0f, -40f), new Vector2(760f, 120f));
-
-            var layout = _reward.gameObject.AddComponent<HorizontalLayoutGroup>();
-            layout.childAlignment = TextAnchor.MiddleCenter;
-            layout.spacing = 20f;
-            layout.childControlWidth = true;
-            layout.childControlHeight = true;
-            layout.childForceExpandWidth = false;
-            layout.childForceExpandHeight = false;
-
-            var coin = UiFactory.CreateImage(_reward, "Coin", art.GetIcon("coin"), Color.white, false);
-            var coinElement = coin.gameObject.AddComponent<LayoutElement>();
-            coinElement.preferredWidth = 100f;
-            coinElement.preferredHeight = 100f;
-
-            _rewardText = UiFactory.CreateText(_reward, "Amount", string.Empty, 90f, UiFactory.Navy, TextAlignmentOptions.Center);
-            _rewardText.overflowMode = TextOverflowModes.Overflow;
-            _rewardText.textWrappingMode = TextWrappingModes.NoWrap;
-
-            _reward.localScale = Vector3.zero;
-        }
-
         private void Update()
         {
             foreach (var button in _buttons)
@@ -122,23 +92,6 @@ namespace Shop.Views
             _group.blocksRaycasts = active;
             _group.interactable = active;
             _group.DOFade(active ? 1f : 0f, 0.25f);
-        }
-
-        public void ShowReward(int coins)
-        {
-            _reward.DOKill();
-            if (coins <= 0)
-                return;
-
-            _rewardText.text = "+" + coins;
-            _reward.localScale = Vector3.zero;
-            _reward.DOScale(1f, 0.4f).SetEase(Ease.OutBack).SetDelay(RewardDelay);
-        }
-
-        public void HideReward()
-        {
-            _reward.DOKill();
-            _reward.localScale = Vector3.zero;
         }
 
         private void OnPressed(PowerUpButton button)

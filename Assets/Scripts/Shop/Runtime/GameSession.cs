@@ -100,10 +100,7 @@ namespace Shop.Runtime
             _runActive = true;
             _lastScore = 0;
             if (_hud != null)
-            {
-                _hud.HideReward();
                 _hud.SetRunActive(true);
-            }
         }
 
         private void OnScoreChanged(int score)
@@ -125,10 +122,7 @@ namespace Shop.Runtime
                 _shop.Service.AddCoins(coins);
 
             if (_hud != null)
-            {
                 _hud.SetRunActive(false);
-                _hud.ShowReward(coins);
-            }
         }
 
         // ---- power-ups -----------------------------------------------------------------------------

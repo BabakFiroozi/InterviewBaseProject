@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Enums;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ScriptableObjects.GameEvents;
 
 namespace GameCore
@@ -81,7 +82,10 @@ namespace GameCore
             angle %= 360f;
 
             // Taps on the power-up buttons must not also flip the ball between the lanes.
-            if (Input.GetMouseButtonDown(0) && !Shop.Views.HudTapGate.IsBlocked(Input.mousePosition))
+            // Pointer covers mouse, touch and pen with the new Input System.
+            var pointer = Pointer.current;
+            if (pointer != null && pointer.press.wasPressedThisFrame
+                && !Shop.Views.HudTapGate.IsBlocked(pointer.position.ReadValue()))
             {
                 AudioManger.AudioManager.Instance.PlaySFX(SoundType.Move);
                 isInside = !isInside;

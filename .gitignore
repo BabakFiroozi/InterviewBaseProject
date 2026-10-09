@@ -16,7 +16,7 @@ UserSettings/
 *.pidb
 *.svd
 *.pdb
-#*.apk
+*.apk
 *.log
 .DS_Store
 Thumbs.db
@@ -28,3 +28,6 @@ Thumbs.db
 # Developer Needs
 Assets/files/
 Assets/files.meta
+
+.utmp/
+TrickyRing_BurstDebugInformation_DoNotShip/
