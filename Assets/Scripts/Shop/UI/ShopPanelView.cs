@@ -196,7 +196,18 @@ namespace Shop.Views
                     Sfx.Play(SoundType.Score);
                     view.Punch();
                     PunchBalance();
-                    _toast.Show(item.IsPowerUp ? item.name + " ADDED" : item.name + " UNLOCKED", UiFactory.Navy);
+                    if (item.IsPowerUp)
+                    {
+                        _toast.Show(item.name + " ADDED", UiFactory.Navy);
+                    }
+                    else
+                    {
+                        // A freshly bought theme is equipped right away (owning and equipping stay separate in the
+                        // service, so it can still be switched back to any owned theme later).
+                        service.Equip(item.id);
+                        _toast.Show(item.name + " UNLOCKED & EQUIPPED", UiFactory.Navy);
+                    }
+
                     break;
 
                 case PurchaseResult.NotEnoughCoins:
