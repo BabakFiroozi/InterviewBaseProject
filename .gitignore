@@ -1,0 +1,30 @@
+# Ignore Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+MemoryCaptures/
+UserSettings/
+
+# Ignore IDE and system files
+*.csproj
+*.sln
+*.user
+*.unitypackage
+*.pidb
+*.svd
+*.pdb
+#*.apk
+*.log
+.DS_Store
+Thumbs.db
+
+# Ignore JetBrains IDE config folder
+.idea/
+.vscode/
+
+# Developer Needs
+Assets/files/
+Assets/files.meta
