@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "economy": {
+    "startingCoins": 0,
+    "coinsPerScorePoint": 1.0,
+    "minCoinsPerRun": 0
+  },
+  "sections": [
+    { "id": "powerups", "title": "Power-ups", "visible": true },
+    { "id": "player_themes", "title": "Player themes", "visible": true },
+    { "id": "world_themes", "title": "World themes", "visible": true }
+  ],
+  "items": [
+    {
+      "id": "powerup_shield", "section": "powerups", "kind": "powerup",
+      "name": "Shield", "description": "Absorbs the next hit.",
+      "price": 60, "maxOwned": 99, "effect": "shield", "duration": 0, "icon": "shield"
+    },
+    {
+      "id": "powerup_double_score", "section": "powerups", "kind": "powerup",
+      "name": "Double score", "description": "Stars are worth x2 for 10 seconds.",
+      "price": 80, "maxOwned": 99, "effect": "doubleScore", "duration": 10, "icon": "doubleScore"
+    },
+    {
+      "id": "powerup_clear", "section": "powerups", "kind": "powerup",
+      "name": "Clear all", "description": "Wipes every obstacle off the ring.",
+      "price": 100, "maxOwned": 99, "effect": "clearThreats", "duration": 0, "icon": "burst"
+    },
+
+    {
+      "id": "player_classic", "section": "player_themes", "kind": "playerTheme",
+      "name": "Classic", "description": "The original ball.",
+      "price": 0, "ownedByDefault": true, "color": "#397FA0"
+    },
+    {
+      "id": "player_sunset", "section": "player_themes", "kind": "playerTheme",
+      "name": "Sunset", "description": "Warm orange glow.",
+      "price": 250, "color": "#FF8A3D"
+    },
+    {
+      "id": "player_mint", "section": "player_themes", "kind": "playerTheme",
+      "name": "Mint", "description": "Fresh and bright.",
+      "price": 400, "color": "#2EE6A6"
+    },
+
+    {
+      "id": "world_classic", "section": "world_themes", "kind": "worldTheme",
+      "name": "Classic", "description": "Clean black ring.",
+      "price": 0, "ownedByDefault": true, "color": "#000000"
+    },
+    {
+      "id": "world_ocean", "section": "world_themes", "kind": "worldTheme",
+      "name": "Ocean", "description": "Deep blue ring.",
+      "price": 300, "color": "#1C4571"
+    },
+    {
+      "id": "world_rose", "section": "world_themes", "kind": "worldTheme",
+      "name": "Rose", "description": "Bold pink ring.",
+      "price": 500, "color": "#E84A6F"
+    }
+  ]
+}

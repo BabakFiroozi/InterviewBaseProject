@@ -29,6 +29,9 @@ namespace GameCore
         [SerializeField] private float dieRotationTime = 0.5f;
         [SerializeField] private float dieFadeTime = 0.5f;
 
+        /// <summary>Multiplies the points a star gives (1 = normal). Used by the double-score power-up.</summary>
+        public int ScoreMultiplier { get; set; } = 1;
+
         private int _score;
         private float angle;
         private float radius;
@@ -77,7 +80,8 @@ namespace GameCore
             angle += speed * Time.deltaTime;
             angle %= 360f;
 
-            if (Input.GetMouseButtonDown(0))
+            // Taps on the power-up buttons must not also flip the ball between the lanes.
+            if (Input.GetMouseButtonDown(0) && !Shop.Views.HudTapGate.IsBlocked(Input.mousePosition))
             {
                 AudioManger.AudioManager.Instance.PlaySFX(SoundType.Move);
                 isInside = !isInside;
@@ -99,7 +103,7 @@ namespace GameCore
                 OnGameEnded.Raise();
             else
             {
-                _score += increasedScoreByPickingStars;
+                _score += increasedScoreByPickingStars * ScoreMultiplier;
                 OnScoreChanged.Raise(_score);
                 AudioManger.AudioManager.Instance.PlaySFX(SoundType.Score);
             }
